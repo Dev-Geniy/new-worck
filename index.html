@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вакансия: Чат-менеджер</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .description {
+            font-size: 18px;
+            margin: 20px 0;
+            color: #666;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #ddd;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .progress {
+            height: 100%;
+            width: 0;
+            background-color: #4caf50;
+            border-radius: 10px;
+        }
+        .question {
+            margin: 20px 0;
+        }
+        .question h3 {
+            font-size: 16px;
+        }
+        .question button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .question button:hover {
+            background-color: #45a049;
+        }
+        .result-button {
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .result-button a {
+            color: white;
+            text-decoration: none;
+        }
+        .result-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Вакансия: Чат-менеджер (удаленно)</h1>
+    <p class="description">
+        Мы ищем чат-менеджера для удаленной работы! Заработная плата от 3200 долларов в месяц. Если вы ищете стабильную работу в
+        дружелюбной команде, заполните анкету и пройдите тестирование, чтобы узнать, подходите ли вы нам.
+    </p>
+
+    <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+    </div>
+
+    <div id="questions">
+        <!-- Вопросы будут здесь -->
+    </div>
+
+    <button class="result-button" id="resultButton">
+        Перейти в Telegram, чтобы сообщить, что вы нам подходите
+    </button>
+</div>
+
+<script>
+    const questions = [
+        {
+            question: "Как вы относитесь к работе с клиентами в чате?",
+            options: [
+                "Я люблю помогать людям и решать их вопросы.",
+                "Мне нравится работать с текстом и отвечать на вопросы.",
+                "Я предпочитаю другие формы общения.",
+                "Я не уверен(а), но готов(а) попробовать."
+            ]
+        },
+        {
+            question: "Как бы вы себя описали в стрессовых ситуациях?",
+            options: [
+                "Я сохраняю спокойствие и ищу решения.",
+                "Могу немного растеряться, но быстро нахожу выход.",
+                "Мне сложно справляться с напряжением.",
+                "Я стараюсь избегать стресса."
+            ]
+        },
+        {
+            question: "Как вы планируете работать из дома?",
+            options: [
+                "Я дисциплинирован(а) и всегда планирую свой день.",
+                "Я могу работать без лишнего контроля.",
+                "Мне нужно напоминание о задачах.",
+                "Мне трудно работать без внешней мотивации."
+            ]
+        },
+        {
+            question: "Почему вы хотите работать в нашей компании?",
+            options: [
+                "У вас интересная работа, и я хочу развиваться.",
+                "Меня привлекла зарплата и условия.",
+                "Я ищу стабильную удаленную работу.",
+                "Я не уверен(а), но хочу попробовать."
+            ]
+        }
+    ];
+
+    let currentQuestion = 0;
+    const progress = document.getElementById("progress");
+    const resultButton = document.getElementById("resultButton");
+
+    function showQuestion() {
+        const questionContainer = document.getElementById("questions");
+        questionContainer.innerHTML = `
+            <div class="question">
+                <h3>${questions[currentQuestion].question}</h3>
+                ${questions[currentQuestion].options.map((option, index) => `
+                    <button onclick="nextQuestion(${index})">${option}</button>
+                `).join('')}
+            </div>
+        `;
+        updateProgress();
+    }
+
+    function nextQuestion(selectedOption) {
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+            showQuestion();
+        } else {
+            showResult();
+        }
+    }
+
+    function updateProgress() {
+        const progressWidth = (currentQuestion / questions.length) * 100;
+        progress.style.width = `${progressWidth}%`;
+    }
+
+    function showResult() {
+        const questionContainer = document.getElementById("questions");
+        questionContainer.innerHTML = `
+            <p>Тест завершен! Вы можете перейти в наш <a href="https://t.me/your_telegram_channel" target="_blank">Telegram-канал</a> и написать + в чат, чтобы сообщить, что вы нам подходите.</p>
+        `;
+        resultButton.style.display = 'block';
+    }
+
+    showQuestion();
+</script>
+
+</body>
+</html>
